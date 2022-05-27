@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('screenings', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             $table->integer('movie_id');
             $table->string('language');
             $table->string('type');
