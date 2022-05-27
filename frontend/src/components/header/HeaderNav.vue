@@ -17,7 +17,10 @@ import { RouterLink } from 'vue-router'
                         <RouterLink class="nav-link" to="/movie-list">Movie list</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <RouterLink class="nav-link" to="/add-movie">Dodaj film</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" to="/modify-movie">Modyfikuj film</RouterLink>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -37,10 +40,10 @@ import { RouterLink } from 'vue-router'
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logowanie</a>
+                        <RouterLink class="nav-link" to="/login">Logowanie</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Rejestracja</a>
+                        <RouterLink class="nav-link" to="/register">Rejestracja</RouterLink>
                     </li>
                 </ul>
             </div>
