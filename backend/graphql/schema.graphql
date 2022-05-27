@@ -4,6 +4,9 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 "Indicates what fields are available at the top level of a query operation."
 type Query {
     "Find a single user by an identifying attribute."
+    movie(
+      id: ID @eq
+    ): Movie @find
     user(
       "Search by primary key."
       id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
@@ -20,6 +23,11 @@ type Query {
     ): [User!]! @paginate(defaultCount: 10)
 }
 
+type Mutation {
+  createSeat(row: Int!, number: Int!, available: Boolean!): Seat @create(model: "App\\Models\\Seat")
+  # createMovie(title: String!, tag: String!, duration: Int!, short_description: String!, long_description: String! ): Movie @create(model: "App\\Models\\Movie")
+
+}
 
 
 "Account of a person who utilizes this application."
@@ -58,4 +66,20 @@ type Comment {
   id: ID!
   reply: String!
   post: Post! @belongsTo
+}
+
+type Movie {
+  id: ID
+  title: String!
+  tag: String!
+  duration: Int!
+  short_description: String!
+  long_description: String!
+}
+
+type Seat {
+  id: ID
+  row: Int!
+  number: Int!
+  available: Boolean!
 }

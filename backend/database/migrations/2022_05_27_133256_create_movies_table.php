@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->string('short_description');
             $table->string('long_description');
+            $table->timestamps();
         });
     }
 
