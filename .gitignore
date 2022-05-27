@@ -28,3 +28,42 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
+
+
+# Graphql
+
+# Logs
+graphql/logs
+graphql/*.log
+graphql/npm-debug.log*
+graphql/yarn-debug.log*
+graphql/yarn-error.log*
+graphql/pnpm-debug.log*
+graphql/lerna-debug.log*
+
+graphql/node_modules
+graphql/.DS_Store
+graphql/dist
+graphql/dist-ssr
+graphql/coverage
+graphql/*.local
+
+graphql/cypress/videos/
+graphql/cypress/screenshots/
+
+# Editor directories and files
+graphql/.vscode/*
+graphql/!.vscode/extensions.json
+graphql/.idea
+graphql/*.suo
+graphql/*.ntvs*
+graphql/*.njsproj
+graphql/*.sln
+graphql/*.sw?
+
+
+# backend-mockup
+
+#venv
+backend-mockup/venv
+backend-mockup/__pycache__

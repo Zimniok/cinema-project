@@ -1,9 +1,8 @@
 <script setup>
-import MovieCardData from '@/models/movieCardData.js'
 import MovieTypeScreenings from './MovieTypeScreenings.vue';
 
 const props = defineProps({
-    'info': MovieCardData
+    info: Object
 })
 
 </script>
