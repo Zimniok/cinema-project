@@ -3,70 +3,50 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
-    "Find a single user by an identifying attribute."
-    movie(
-      id: ID @eq
-    ): Movie @find
-    user(
-      "Search by primary key."
-      id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
-
-      "Search by email address."
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
-  posts: [Post!]! @all
-  post(id: Int! @eq): Post @find
-    "List multiple users."
-    users(
-      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
-      name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+    movie(id: ID @eq): Movie @find
+    screening(id: ID @eq): Screening @find
+    user(id: ID @eq): User @find
+    user(email: String @eq): User @find
+    seat(id: ID @eq): Seat @find
+    seats(available: Boolean @eq): Seat @find
+    tickets(
+    screening_id: Int! @eq
+    seat_id: Int! @eq 
+    user_id: Int! @eq 
+      ): [Ticket!]! 
 }
 
 type Mutation {
   createSeat(row: Int!, number: Int!, available: Boolean!): Seat @create(model: "App\\Models\\Seat")
-  # createMovie(title: String!, tag: String!, duration: Int!, short_description: String!, long_description: String! ): Movie @create(model: "App\\Models\\Movie")
+  createMovie(title: String!, tag: String!, duration: Int!, short_description: String!, long_description: String! ): Movie @create(model: "App\\Models\\Movie")
+  createUser(first_name: String!, last_name: String!, email: String!, password: String!, group: String!): User @create
+  createScreening(movie_id: Int!, language: String!, type: String, description: String!, time: DateTime!): Screening @create
+  createTicket(screening_id: Int!, seat_id: Int!, user_id: Int!): Ticket @create
 
 }
 
 
-"Account of a person who utilizes this application."
 type User {
-    "Unique primary key."
     id: ID!
-
-    "Non-unique name."
-    name: String!
-
-    "Unique email address."
+    first_name: String!
+    last_name: String!
     email: String!
-
-    "When the email was verified."
-    email_verified_at: DateTime
-
-    "When the account was created."
-    created_at: DateTime!
-
-    "When the account was last updated."
-    updated_at: DateTime!
-
-    posts: [Post!]! @hasMany
-
+    password: String!
+    group: String!
+    tickets: [Ticket!]! @hasMany
 }
 
-type Post {
+
+type Screening {
   id: ID!
-  title: String!
-  content: String!
-  author: User! @belongsTo
-  comments: [Comment!]! @hasMany
+  movie: Movie! @belongsTo
+  tickets: [Ticket!]! @hasMany
+  language: String!
+  type: String!
+  description: String!
+  time: DateTime!
 }
 
-type Comment {
-  id: ID!
-  reply: String!
-  post: Post! @belongsTo
-}
 
 type Movie {
   id: ID
@@ -75,6 +55,7 @@ type Movie {
   duration: Int!
   short_description: String!
   long_description: String!
+  screenings: [Movie!]! @hasMany
 }
 
 type Seat {
@@ -82,4 +63,11 @@ type Seat {
   row: Int!
   number: Int!
   available: Boolean!
+  tickets: [Ticket!]! @hasMany
+}
+
+type Ticket {
+  screening: Screening @belongsTo
+  seat: Seat @belongsTo
+  user: User @belongsTo
 }

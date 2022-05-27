@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
+            // $table->bigIncrements('id');
             $table->integer('screening_id');
-            $table->integer('screen_id');
+            $table->integer('seat_id');
             $table->integer('user_id');
+            $table->primary(['screening_id', 'seat_id', 'user_id']);
             $table->timestamps();
         });
     }
