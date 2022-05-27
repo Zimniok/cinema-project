@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('group', ['user', 'employee']);
             $table->rememberToken();
+            $table->timestamps();
         });
     }
 

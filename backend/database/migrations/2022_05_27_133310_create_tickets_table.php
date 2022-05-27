@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('screening_id');
             $table->integer('screen_id');
             $table->integer('user_id');
+            $table->timestamps();
         });
     }
 
