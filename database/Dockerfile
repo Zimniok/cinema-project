@@ -1,0 +1,10 @@
+#Database image
+FROM mysql
+
+ENV MYSQL_ROOT_PASSWORD root_password
+ENV MYSQL_DATABASE cinema
+ENV MYSQL_USER app
+ENV MYSQL_PASSWORD app_password
+
+
+EXPOSE 3306
