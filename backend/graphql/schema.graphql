@@ -55,7 +55,7 @@ type Movie {
   duration: Int!
   short_description: String!
   long_description: String!
-  screenings: [Movie!]! @hasMany
+  screenings: [Screening!]! @hasMany
 }
 
 type Seat {
