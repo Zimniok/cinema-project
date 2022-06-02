@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('id');
             $table->integer('row');
             $table->integer('number');
-            $table->boolean('available');
             $table->timestamps();
         });
     }

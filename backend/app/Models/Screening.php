@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Screening extends Model
 {
-    public function screenings(): HasMany
+    use HasFactory;
+    
+    public function tickets(): HasMany
     {
-        return $this->hasMany(Screening::class);
+        return $this->hasMany(Ticket::class);
     }
 
     public function movie(): BelongsTo

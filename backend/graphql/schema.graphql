@@ -4,7 +4,9 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 "Indicates what fields are available at the top level of a query operation."
 type Query {
     movie(id: ID @eq): Movie @find
+    movies: [Movie]! @all
     screening(id: ID @eq): Screening @find
+    screenings: [Screening]! @all
     user(id: ID @eq): User @find
     user(email: String @eq): User @find
     seat(id: ID @eq): Seat @find
@@ -13,7 +15,7 @@ type Query {
     screening_id: Int! @eq
     seat_id: Int! @eq 
     user_id: Int! @eq 
-      ): [Ticket!]! 
+      ): [Ticket!]! @find
 }
 
 type Mutation {
@@ -55,7 +57,7 @@ type Movie {
   duration: Int!
   short_description: String!
   long_description: String!
-  screenings: [Movie!]! @hasMany
+  screenings: [Screening!]! @hasMany
 }
 
 type Seat {
