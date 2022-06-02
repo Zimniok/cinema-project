@@ -19,21 +19,9 @@ class SeatFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'row' => $this->faker->numberBetween(),
+            'number' => $this->faker->numberBetween()
         ];
     }
 
-    public function setSeats()
-    {
-        $seats = [];
-        for ($i = 0; $i < self::ROWS; $i++) {
-            for ($j = 0; $j < self::NUMBERS; $j++) {
-                $seats[] = array(
-                    'row' => $i,
-                    'numbver' => $j
-                );
-            }
-        }
-        return $seats;
-    }
 }

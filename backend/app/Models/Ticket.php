@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ticket extends Model
 {
+    use HasFactory;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

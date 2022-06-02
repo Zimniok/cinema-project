@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seat extends Model
 {
+    use HasFactory;
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
