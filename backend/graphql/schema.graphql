@@ -6,6 +6,7 @@ type Query {
     movie(id: ID @eq): Movie @find
     movies: [Movie]! @all
     screening(id: ID @eq): Screening @find
+    screenings: [Screening]! @all
     user(id: ID @eq): User @find
     user(email: String @eq): User @find
     seat(id: ID @eq): Seat @find
