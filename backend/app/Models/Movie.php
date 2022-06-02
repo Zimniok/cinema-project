@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
+    use HasFactory;
     public function screenings(): HasMany
     {
         return $this->hasMany(Screening::class);
