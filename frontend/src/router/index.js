@@ -4,6 +4,7 @@ import MovieListView from '../views/MovieListView.vue'
 import ModifyMovie from '../views/ModifyMovie.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Reservation from '../views/ReservationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/reservation/:id',
+      name: 'reservation',
+      component: Reservation,
+      props: true
     }
   ]
 })

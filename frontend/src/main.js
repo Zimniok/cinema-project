@@ -14,7 +14,7 @@ import { DefaultApolloClient } from "@vue/apollo-composable";
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: "http://localhost:8000",
+  uri: "http://cinema.eastus.cloudapp.azure.com:8000/graphql",
 });
 
 // Cache implementation
