@@ -1,5 +1,6 @@
 <template>
     <div>
+		
         <h1>Login</h1>
         <div>
             <label for="email">Email</label>
@@ -28,6 +29,7 @@
 
         methods: {
             login() {
+                console.log(this.user)
                 this.axios.post('http://127.0.0.1:8000/api/login', this.user)
                     .then(({data}) => {
                         Auth.login(data.access_token,data.user); //set local storage

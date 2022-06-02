@@ -11,7 +11,7 @@ type Query {
     user(id: ID @eq): User @find
     user(email: String @eq): User @find
     seat(id: ID @eq): Seat @find
-    seats(available: Boolean @eq): Seat @find
+    seats: [Seat]! @all
     tickets(
         screening_id: Int! @eq
         seat_id: Int! @eq

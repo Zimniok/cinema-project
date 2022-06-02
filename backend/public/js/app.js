@@ -5473,6 +5473,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5487,6 +5488,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
+      console.log(this.user);
       this.axios.post('http://127.0.0.1:8000/api/login', this.user).then(function (_ref) {
         var data = _ref.data;
         _Auth_js__WEBPACK_IMPORTED_MODULE_0__["default"].login(data.access_token, data.user); //set local storage
@@ -5535,14 +5537,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       user: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: ""
       }
     };
   },
@@ -5551,10 +5557,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       console.log(this.user);
-      this.axios.post('http://127.0.0.1:8000/api/register', this.user).then(function (_ref) {
+      this.axios.post("http://127.0.0.1:8000/api/register", this.user).then(function (_ref) {
         var data = _ref.data;
 
-        _this.$router.push('/login');
+        _this.$router.push("/login");
       })["catch"](function (error) {
         console.log(error);
       });
@@ -28723,25 +28729,50 @@ var render = function () {
     _c("h1", [_vm._v("Register")]),
     _vm._v(" "),
     _c("div", [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+      _c("label", { attrs: { for: "name" } }, [_vm._v("First name")]),
       _vm._v(" "),
       _c("input", {
         directives: [
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.user.name,
-            expression: "user.name",
+            value: _vm.user.first_name,
+            expression: "user.first_name",
           },
         ],
         attrs: { type: "text" },
-        domProps: { value: _vm.user.name },
+        domProps: { value: _vm.user.first_name },
         on: {
           input: function ($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.user, "name", $event.target.value)
+            _vm.$set(_vm.user, "first_name", $event.target.value)
+          },
+        },
+      }),
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("label", { attrs: { for: "last_name" } }, [_vm._v("Last name")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.user.last_name,
+            expression: "user.last_name",
+          },
+        ],
+        attrs: { type: "text" },
+        domProps: { value: _vm.user.last_name },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.user, "last_name", $event.target.value)
           },
         },
       }),
