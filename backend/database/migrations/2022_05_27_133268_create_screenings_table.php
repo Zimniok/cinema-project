@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('screenings', function (Blueprint $table) {
             $table->id('id');
-            $table->integer('movie_id');
+            $table->unsignedBigInteger('movie_id');
             $table->string('language');
             $table->string('type');
             $table->string('description');
             $table->dateTime('time');
+            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
             $table->timestamps();
         });
     }

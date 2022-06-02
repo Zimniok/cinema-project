@@ -19,7 +19,7 @@ class ScreeningFactory extends Factory
         return [
             'movie_id' => $this->faker->numberBetween(1, 10),
             'language' => $this->faker->languageCode(),
-            'type' => $this->faker->text(20),
+            'type' => $this->faker->regexify('[2-3]D'),
             'description' => $this->faker->text(),
             'time' => $this->faker->dateTimeBetween('now', '+2 week'),
         ];

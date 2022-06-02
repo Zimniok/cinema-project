@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
         \App\Models\Movie::factory(10)->create();
-        \App\Models\Screening::factory(10)->create();
+        \App\Models\Screening::factory(50)->create();
         for ($i = 1; $i <= self::SEATS_ROWS; $i++) {
             for ($j = 1; $j <= self::SEATS_NUMBERS; $j++) {
                 \App\Models\Seat::factory()->create([
