@@ -28,16 +28,10 @@ const router = createRouter({
       component: MovieListView
     },
     {
-      path: '/add-movie',
-      name: 'add_movie',
-      component: ModifyMovie,
-      props: { type: 'add' }
-    },
-    {
-      path: '/modify-movie',
+      path: '/movie/:type/:id?',
       name: 'modify_movie',
       component: ModifyMovie,
-      props: { type: 'modify' }
+      props: true
     },
     {
       path: '/login',

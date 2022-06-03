@@ -33,6 +33,9 @@ for(let screening = 0; screening < props.info.screenings.length; screening ++){
                 <p class="card-subtitle mb-2 text-muted">{{ props.info.tag }} | {{
                         props.info.duration
                 }} min</p>
+                <button class="btn btn-outline-secondary edit-button" @click="this.$router.push({name: 'modify_movie', params: {type: 'modify', id: this.props.info.id}})">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
                 <p class="card-text">{{ props.info.short_description }}</p>
                 <div class="movie-screenings-container border-top" v-for="type in Object.keys(this.types)">
                     <MovieTypeScreenings :type="type" :screenings="types[type]" />
@@ -45,5 +48,11 @@ for(let screening = 0; screening < props.info.screenings.length; screening ++){
 <style>
 .movie-screenings-container {
     margin-left: 154px;
+}
+
+.edit-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 </style>
