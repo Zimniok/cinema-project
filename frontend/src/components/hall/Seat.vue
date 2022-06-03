@@ -6,7 +6,8 @@ const props = defineProps({
     number: Number,
     row: Number,
     avaiability: Boolean,
-    selected: Boolean
+    selected: Boolean,
+    id: Number
 })
 
 const count = ref(0)
@@ -15,7 +16,7 @@ const s = ref(props.selected)
 function triggerSelect(){
     if(props.avaiability){
         s.value = !s.value
-        props.selectSeat(props.row, props.number)
+        props.selectSeat(props.id, s.value)
     }
     
 }
@@ -27,7 +28,6 @@ function triggerSelect(){
         <div :class="[props.avaiability ? 'available' : 'not_available', s ? 'selected' : '', 'seat']" @click="triggerSelect">
             <p class="num">{{ props.number }}</p>
         </div>
-        {{ count }}
     </div>
 </template>
 

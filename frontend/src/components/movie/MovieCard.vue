@@ -1,8 +1,15 @@
 <script setup>
 import MovieTypeScreenings from './MovieTypeScreenings.vue';
 
+import { useQuery, useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+
+
+
+
 const props = defineProps({
-    info: Object
+    info: Object,
+    removeMovie: Function
 })
 const types = {};
 for(let screening = 0; screening < props.info.screenings.length; screening ++){
@@ -36,6 +43,9 @@ for(let screening = 0; screening < props.info.screenings.length; screening ++){
                 <button class="btn btn-outline-secondary edit-button" @click="this.$router.push({name: 'modify_movie', params: {type: 'modify', id: this.props.info.id}})">
                     <i class="fa-solid fa-pen"></i>
                 </button>
+                <button class="btn btn-outline-danger delete-button" @click="this.props.removeMovie(this.props.info.id)">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
                 <p class="card-text">{{ props.info.short_description }}</p>
                 <div class="movie-screenings-container border-top" v-for="type in Object.keys(this.types)">
                     <MovieTypeScreenings :type="type" :screenings="types[type]" />
@@ -51,6 +61,12 @@ for(let screening = 0; screening < props.info.screenings.length; screening ++){
 }
 
 .edit-button {
+    position: absolute;
+    top: 5px;
+    right: 53px;
+}
+
+.delete-button {
     position: absolute;
     top: 5px;
     right: 5px;
