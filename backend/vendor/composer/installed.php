@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c76a1f8166f1bdde9be84f75624dc35b1e8fe729',
+        'reference' => 'd8b3d38c59725502617fa227d6661db4b6b9a384',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -394,6 +394,15 @@
                 0 => 'v9.14.1',
             ),
         ),
+        'joselfonseca/lighthouse-graphql-passport-auth' => array(
+            'pretty_version' => '6.0.2',
+            'version' => '6.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../joselfonseca/lighthouse-graphql-passport-auth',
+            'aliases' => array(),
+            'reference' => 'dcced2f8f0449e33991091dbd5b3df36a42838c8',
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -424,7 +433,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c76a1f8166f1bdde9be84f75624dc35b1e8fe729',
+            'reference' => 'd8b3d38c59725502617fa227d6661db4b6b9a384',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(
@@ -461,6 +470,15 @@
             'install_path' => __DIR__ . '/../laravel/serializable-closure',
             'aliases' => array(),
             'reference' => '09f0e9fb61829f628205b7c94906c28740ff9540',
+            'dev_requirement' => false,
+        ),
+        'laravel/socialite' => array(
+            'pretty_version' => 'v5.5.2',
+            'version' => '5.5.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/socialite',
+            'aliases' => array(),
+            'reference' => '68afb03259b82d898c68196cbcacd48596a9dd72',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -542,6 +560,15 @@
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
             'reference' => 'ff6248ea87a9f116e78edd6002e39e5128a0d4dd',
+            'dev_requirement' => false,
+        ),
+        'league/oauth1-client' => array(
+            'pretty_version' => 'v1.10.1',
+            'version' => '1.10.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/oauth1-client',
+            'aliases' => array(),
+            'reference' => 'd6365b901b5c287dd41f143033315e2f777e1167',
             'dev_requirement' => false,
         ),
         'league/oauth2-server' => array(
