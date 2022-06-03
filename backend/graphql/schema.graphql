@@ -1,5 +1,6 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
@@ -7,26 +8,87 @@ type Query {
     movies: [Movie]! @all
     screening(id: ID @eq): Screening @find
     screenings: [Screening]! @all
-    user(id: ID @eq): User @find
-    user(email: String @eq): User @find
+    user(
+        id: ID @eq
+        email: String @eq
+        ): User @find
+    users: [User!]!
     seat(id: ID @eq): Seat @find
-    seats(available: Boolean @eq): Seat @find
+    seats: [Seat]! @all
     tickets(
-    screening_id: Int! @eq
-    seat_id: Int! @eq 
-    user_id: Int! @eq 
-      ): [Ticket!]! @find
+        screening_id: Int! @eq
+        seat_id: Int! @eq
+        user_id: Int! @eq
+    ): [Ticket!]! @find
 }
+
 
 type Mutation {
-  createSeat(row: Int!, number: Int!, available: Boolean!): Seat @create(model: "App\\Models\\Seat")
-  createMovie(title: String!, tag: String!, duration: Int!, short_description: String!, long_description: String! ): Movie @create(model: "App\\Models\\Movie")
-  createUser(first_name: String!, last_name: String!, email: String!, password: String!, group: String!): User @create
-  createScreening(movie_id: Int!, language: String!, type: String, description: String!, time: DateTime!): Screening @create
-  createTicket(screening_id: Int!, seat_id: Int!, user_id: Int!): Ticket @create
-
+    #auth
+    login(input: LoginInput @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve")
+    refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve")
+    logout: LogoutResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve")
+    forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ForgotPassword@resolve")
+    updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ResetPassword@resolve")
+    register(input: RegisterInput @spread): RegisterResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Register@resolve")
+    socialLogin(input: SocialLoginInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\SocialLogin@resolve")
+    verifyEmail(input: VerifyEmailInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\VerifyEmail@resolve")
+    updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+    # create
+    createSeat(row: Int!, number: Int!, available: Boolean!): Seat @create
+    createMovie(
+        title: String!
+        tag: String!
+        duration: Int!
+        short_description: String!
+        long_description: String!
+    ): Movie @create
+    createUser(
+        first_name: String!
+        last_name: String!
+        email: String!
+        password: String!
+        group: String!
+    ): User @create
+    createScreening(
+        movie_id: Int!
+        language: String!
+        type: String
+        description: String!
+        time: DateTime!
+    ): Screening @create
+    createTicket(screening_id: Int!, seat_id: Int!, user_id: Int!): Ticket
+        @create
+    # remove
+    removeMovie(id: ID!): Movie @delete
+    removeUser(id: ID!): User @delete
+    removeScreening(id: ID!): Screening @delete
+    #update
+    updateMovie(
+        id: ID
+        title: String
+        tag: String
+        duration: Int
+        short_description: String
+        long_description: String
+    ): Movie @update
+    updateUser(
+        id: ID
+        first_name: String
+        last_name: String
+        email: String
+        password: String
+        group: String
+    ): User @update
+    updateScreening(
+        id: ID
+        movie_id: Int
+        language: String
+        type: String
+        description: String
+        time: DateTime
+    ): Screening @update
 }
-
 
 type User {
     id: ID!
@@ -38,38 +100,36 @@ type User {
     tickets: [Ticket!]! @hasMany
 }
 
-
 type Screening {
-  id: ID!
-  movie: Movie! @belongsTo
-  tickets: [Ticket!]! @hasMany
-  language: String!
-  type: String!
-  description: String!
-  time: DateTime!
+    id: ID!
+    movie: Movie! @belongsTo
+    tickets: [Ticket!]! @hasMany
+    language: String!
+    type: String!
+    description: String!
+    time: DateTime!
 }
 
-
 type Movie {
-  id: ID
-  title: String!
-  tag: String!
-  duration: Int!
-  short_description: String!
-  long_description: String!
-  screenings: [Screening!]! @hasMany
+    id: ID
+    title: String!
+    tag: String!
+    duration: Int!
+    short_description: String!
+    long_description: String!
+    screenings: [Screening!]! @hasMany
 }
 
 type Seat {
-  id: ID
-  row: Int!
-  number: Int!
-  available: Boolean!
-  tickets: [Ticket!]! @hasMany
+    id: ID
+    row: Int!
+    number: Int!
+    available: Boolean!
+    tickets: [Ticket!]! @hasMany
 }
 
 type Ticket {
-  screening: Screening @belongsTo
-  seat: Seat @belongsTo
-  user: User @belongsTo
+    screening: Screening @belongsTo
+    seat: Seat @belongsTo
+    user: User @belongsTo
 }
