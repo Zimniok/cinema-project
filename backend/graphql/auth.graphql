@@ -65,10 +65,11 @@ input NewPasswordWithCodeInput {
 }
 
 input RegisterInput {
-    name: String! @rules(apply: ["required", "string"])
-    email: String! @rules(apply: ["required", "email", "unique:users,email"])
-    password: String! @rules(apply: ["required", "confirmed", "min:8"])
-    password_confirmation: String!
+    first_name: String!
+    last_name: String!
+    email: String!
+    password: String!
+    group: String!
 }
 
 input SocialLoginInput {

@@ -12,7 +12,7 @@ type Query {
         id: ID @eq
         email: String @eq
         ): User @find
-    users: [User!]!
+    # users: [User!]!
     seat(id: ID @eq): Seat @find
     seats: [Seat]! @all
     tickets(
@@ -42,21 +42,21 @@ type Mutation {
         duration: Int!
         short_description: String!
         long_description: String!
-    ): Movie @create
+    ): Movie @create @guard(with: ["api"])
     createUser(
         first_name: String!
         last_name: String!
         email: String!
         password: String!
         group: String!
-    ): User @create
+    ): User @create @guard(with: ["api"])
     createScreening(
         movie_id: Int!
         language: String!
         type: String
         description: String!
         time: DateTime!
-    ): Screening @create
+    ): Screening @create @guard(with: ["api"])
     createTicket(screening_id: Int!, seat_id: Int!, user_id: Int!): Ticket
         @create
     # remove
@@ -71,7 +71,7 @@ type Mutation {
         duration: Int
         short_description: String
         long_description: String
-    ): Movie @update
+    ): Movie @update @guard(with: ["api"])
     updateUser(
         id: ID
         first_name: String
@@ -79,7 +79,7 @@ type Mutation {
         email: String
         password: String
         group: String
-    ): User @update
+    ): User @update @guard(with: ["api"])
     updateScreening(
         id: ID
         movie_id: Int
@@ -87,7 +87,7 @@ type Mutation {
         type: String
         description: String
         time: DateTime
-    ): Screening @update
+    ): Screening @update @guard(with: ["api"])
 }
 
 type User {
@@ -99,6 +99,7 @@ type User {
     group: String!
     tickets: [Ticket!]! @hasMany
 }
+
 
 type Screening {
     id: ID!
