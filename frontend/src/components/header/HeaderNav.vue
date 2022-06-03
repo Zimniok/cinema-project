@@ -4,7 +4,7 @@ import { reactive, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const data = reactive({
-    loggedIn: false,
+    loggedIn: localStorage.getItem('token') != null,
     user: {}
 })
 

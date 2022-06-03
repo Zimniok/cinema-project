@@ -90,6 +90,29 @@ const { mutate: createScreening, onDone: createScreeningDone, onError: createScr
     `
 )
 
+const { mutate: deleteScreening, onDone: deleteScreeningDone, onError: deleteScreeningError } = useMutation(gql`
+        mutation deleteScreening($id: ID!){
+            removeScreening(id: $id){
+                id
+            }
+        }
+    `
+)
+
+function removeScreening(id){
+    deleteScreening({
+        id: id
+    })
+}
+
+deleteScreeningDone((result) => {
+for(let i =0; i < screenings.ar.length; i++){
+        if(screenings.ar[i].id == result.data.removeScreening.id){
+            screenings.ar.splice(i,1)
+        }
+    }
+})
+
 function movieFormSumbit(){
     if(props.type == 'modify'){
     modifyMovie({
@@ -213,7 +236,7 @@ createMovieError(error => {
                 <td>{{ screening.language }}</td>
                 <td><button class="btn btn-outline-secondary" @click="modifyScreening(idx)"><i
                             class="fa-solid fa-pen"></i></button></td>
-                <td><button class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button></td>
+                <td><button class="btn btn-outline-danger" @click="removeScreening(screening.id)"><i class="fa-solid fa-trash-can"></i></button></td>
             </tr>
         </tbody>
     </table>

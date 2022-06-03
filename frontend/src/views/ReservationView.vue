@@ -1,7 +1,7 @@
 <script setup>
 import Hall from '@/components/hall/Hall.vue'
 
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const props = defineProps({
@@ -11,10 +11,12 @@ const props = defineProps({
 const selectedSeats = []
 
 const rows = []
+let ids = 1
 for (let i = 0; i < 10; i++) {
     rows.push({ number: i + 1, row: [] })
     for (let j = 1; j < 11; j++) {
-        rows[i].row.push({ number: j, avaiability: true, selected: false });
+        rows[i].row.push({ number: j, avaiability: true, selected: false, id: ids});
+        ids++
     }
 }
 
@@ -46,15 +48,39 @@ onResult(queryResult => {
     }
 })
 
+const { mutate: createTicket, onDone: createTicketDone, onError: createTicketError } = useMutation(gql`
+        mutation createTicket($screening_id: Int!, $seat_id: Int!, $user_id: Int!){
+            createTicket(screening_id: $screening_id, seat_id: $seat_id, user_id: $user_id){
+                user{
+                    id
+                }
+            }
+        }
+    `
+)
+
 function selectSeat(id, selected) {
+    
     if (selected) {
         selectedSeats.push(id)
     } else {
         for (let i = 0; i < selectedSeats.length; i++) {
-            if (arr[i] === id) {
+            if ( selectedSeats && selectedSeats[i] == id) {
                 selectedSeats.splice(i, 1);
             }
         }
+    }
+}
+
+function book() {
+    if(selectedSeats.length  != 1){
+        alert('Można zarezerwować tylko 1 miejsce')
+    } else {
+        createTicket({
+            screening_id: parseInt(props.id),
+            seat_id: parseInt(selectedSeats[0]),
+            user_id: parseInt(JSON.parse(localStorage.getItem('user')).id)
+        })
     }
 }
 </script>
@@ -66,10 +92,10 @@ function selectSeat(id, selected) {
     <div v-else-if="this.error" class="container mt-1">
         <h1>Error: {{ this.error.message }}</h1>
     </div>
-    <div v-else-if="this.result" class="container mt-1">
-        {{ this.props.id }}
+    <div v-else-if="this.result" class="container mt-1 mb-5">
+        <h1 class="mb-3">Rezerwacja miejsca</h1>
         <Hall :rows="this.rows" :selectSeat="selectSeat" />
-        {{ result.screening.tickets }}
+        <button class="btn btn-primary mt-2" @click="book()">Rezerwuj</button>
     </div>
 
 </template>
