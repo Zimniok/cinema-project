@@ -45,7 +45,7 @@ const { result, loading, error } = useQuery(gql`
     <div v-else-if="this.result" class="container mt-1">
         <h1 v-if="props.type == 'add'">Dodaj film</h1>
         <h1 v-if="props.type == 'modify'">Modyfikuj film</h1>
-        <ModifyMovieForm :data="this.result.movie"/>
+        <ModifyMovieForm :data="this.props.type=='add'? {id:'', title:'', tag:'', short_description: '', long_description:'', duration: ''}:this.result.movie" :type="this.props.type"/>
     </div>
 </template>
 
