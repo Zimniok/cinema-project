@@ -5,21 +5,37 @@ import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const { result, loading, error } = useQuery(gql`
-        query getUsers {
+        query {
             movies {
+                id
                 title
-                categories
-                description
+                tag
+                short_description
                 duration
                 screenings {
-                    dsc
-                    hours
+                    id
+                    description
+                    time
                     type
+                    language
                 }
             }
         }
     `,
 )
+
+// const { result, loading, error } = useQuery(gql`
+//         query getUsers {
+//             movies {
+//                 id
+//                 title
+//                 categories
+//                 description
+//                 duration
+//             }
+//         }
+//     `,
+// )
 
 </script>
 

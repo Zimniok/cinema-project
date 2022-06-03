@@ -4,6 +4,22 @@ import MovieTypeScreenings from './MovieTypeScreenings.vue';
 const props = defineProps({
     info: Object
 })
+const types = {};
+for(let screening = 0; screening < props.info.screenings.length; screening ++){
+    if(props.info.screenings[screening].type in types){
+        let el = {
+            id : props.info.screenings[screening].id,
+            time: props.info.screenings[screening].time
+        }
+        types[props.info.screenings[screening].type].push(el);
+    } else {
+        let el = {
+            id : props.info.screenings[screening].id,
+            time: props.info.screenings[screening].time
+        }
+        types[props.info.screenings[screening].type] = [props.info.screenings[screening].description,el];
+    }
+}
 
 </script>
 
@@ -14,12 +30,15 @@ const props = defineProps({
                 alt="Card image cap" width="140">
             <div class="position-relative container-fluid">
                 <h3 class="card-title">{{ props.info.title }}</h3>
-                <p class="card-subtitle mb-2 text-muted">{{ props.info.categories.join([separator = ', ']) }} | {{
+                <p class="card-subtitle mb-2 text-muted">{{ props.info.tag }} | {{
                         props.info.duration
                 }} min</p>
-                <p class="card-text">{{ props.info.description }}</p>
-                <div class="movie-screenings-container border-top" v-for="screening in this.props.info.screenings">
-                    <MovieTypeScreenings :type="screening.type" :dsc="screening.dsc" :screenings="screening.hours" />
+                <button class="btn btn-outline-secondary edit-button" @click="this.$router.push({name: 'modify_movie', params: {type: 'modify', id: this.props.info.id}})">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <p class="card-text">{{ props.info.short_description }}</p>
+                <div class="movie-screenings-container border-top" v-for="type in Object.keys(this.types)">
+                    <MovieTypeScreenings :type="type" :screenings="types[type]" />
                 </div>
             </div>
         </div>
@@ -29,5 +48,11 @@ const props = defineProps({
 <style>
 .movie-screenings-container {
     margin-left: 154px;
+}
+
+.edit-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 </style>

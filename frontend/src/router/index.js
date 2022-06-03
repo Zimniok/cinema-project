@@ -4,6 +4,7 @@ import MovieListView from '../views/MovieListView.vue'
 import ModifyMovie from '../views/ModifyMovie.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Reservation from '../views/ReservationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,16 +28,10 @@ const router = createRouter({
       component: MovieListView
     },
     {
-      path: '/add-movie',
-      name: 'add_movie',
-      component: ModifyMovie,
-      props: { type: 'add' }
-    },
-    {
-      path: '/modify-movie',
+      path: '/movie/:type/:id?',
       name: 'modify_movie',
       component: ModifyMovie,
-      props: { type: 'modify' }
+      props: true
     },
     {
       path: '/login',
@@ -47,6 +42,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/reservation/:id',
+      name: 'reservation',
+      component: Reservation,
+      props: true
     }
   ]
 })
