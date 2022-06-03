@@ -46,7 +46,8 @@ const { result, loading, error } = useQuery(gql`
     <div v-else-if="this.error" class="container mt-1">
         <h1>Error: {{ this.error.message }}</h1>
     </div>
-    <div v-else-if="this.result" class="container mt-1">
+    <div v-else-if="this.result" class="container mt-1 mb-5">
         <MovieCard v-for="movieData in this.result.movies" :info="movieData" />
+        <button class="btn btn-primary mt-2" @click="this.$router.push({name: 'modify_movie', params: {type: 'add', id: -1}})">Dodaj film</button>
     </div>
 </template>

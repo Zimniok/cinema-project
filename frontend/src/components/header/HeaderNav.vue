@@ -1,5 +1,40 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+import { reactive, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+
+const data = reactive({
+    loggedIn: false,
+    user: {}
+})
+
+const isLoggedIn = computed(() => {
+  return data.loggedIn === true
+})
+
+const username = computed(() => {
+    return data.user == {} ? '' : data.user.email
+})
+
+onMounted(() => {
+    window.addEventListener('token-localstorage-changed', (event) => {
+    Object.assign(data, {
+        loggedIn: event.detail.loggedIn,
+        user: JSON.parse(event.detail.user)
+        })
+  });
+})
+
+function logout(){
+    localStorage.removeItem('token');
+    window.dispatchEvent(new CustomEvent('token-localstorage-changed', {
+        detail: {
+            loggedIn: false,
+            user: '{}'
+        }
+    }));
+    localStorage.removeItem('user');
+}
 </script>
 
 <template>
@@ -37,13 +72,24 @@ import { RouterLink } from 'vue-router'
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link disabled" href="#">{{isLoggedIn}}</a>
+                    </li> -->
                 </ul>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" v-if="!isLoggedIn">
                     <li class="nav-item">
                         <RouterLink class="nav-link" to="/login">Logowanie</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink class="nav-link" to="/register">Rejestracja</RouterLink>
+                    </li>
+                </ul>
+                <ul class="navbar-nav" v-else>
+                    <li class="nav-item">
+                        <a class="nav-link">{{username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" @click="logout()">Wyloguj się</a>
                     </li>
                 </ul>
             </div>
